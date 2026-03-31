@@ -1,0 +1,21 @@
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.22",
+  "base_commit_sha": "abf7915bd94d3565f8802dad8457996e8c92ee5d",
+  "prompts": {
+    "2e8aa047e9d8adbe": {
+      "agent_id": {
+        "tool": "gemini",
+        "id": "07a78843-f806-41be-be17-ce505bbc936a",
+        "model": "gemini-3-flash-preview"
+      },
+      "human_author": "Jianxi Wang <jianxiwang@google.com>",
+      "messages": [],
+      "total_additions": 0,
+      "total_deletions": 3,
+      "accepted_lines": 190,
+      "overriden_lines": 0
+    }
+  }
+}
