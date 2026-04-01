@@ -1,0 +1,23 @@
+cloudbuild.yaml
+  0a5692281eec20c8 1-31
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.2.3",
+  "base_commit_sha": "4465cbb5fba97673a2761041c7d0aa7a3a780f80",
+  "prompts": {
+    "0a5692281eec20c8": {
+      "agent_id": {
+        "tool": "gemini",
+        "id": "73540ce1-2709-4233-ad99-62e56f6822b4",
+        "model": "gemini-3-flash-preview"
+      },
+      "human_author": "Jianxi Wang",
+      "messages": [],
+      "total_additions": 174,
+      "total_deletions": 0,
+      "accepted_lines": 174,
+      "overriden_lines": 0
+    }
+  }
+}
