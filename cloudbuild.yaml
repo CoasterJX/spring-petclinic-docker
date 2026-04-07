@@ -1,6 +1,6 @@
 steps:
   # Step 1: Run unit tests
-  - name: 'maven:3.9-eclipse-temurin-21'
+  - name: 'eclipse-temurin:21-jdk-jammy'
     entrypoint: './mvnw'
     args: ['test']
     id: 'test'
