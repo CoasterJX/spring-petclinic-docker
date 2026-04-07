@@ -1,0 +1,47 @@
+steps:
+  # Step 1: Run unit tests
+  - name: 'maven:3.9-eclipse-temurin-21'
+    entrypoint: './mvnw'
+    args: ['test']
+    id: 'test'
+
+  # Step 2: Build and push container image
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'build'
+      - '--target=production'
+      - '-f=Dockerfile.multi'
+      - '-t=${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO_NAME}/petclinic:$COMMIT_SHA'
+      - '-t=${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO_NAME}/petclinic:latest'
+      - '.'
+    id: 'build'
+    waitFor: ['test']
+
+  # Step 3: Push container image
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'push'
+      - '--all-tags'
+      - '${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO_NAME}/petclinic'
+    id: 'push'
+    waitFor: ['build']
+
+  # Step 4: Deploy to GKE
+  - name: 'gcr.io/cloud-builders/gke-deploy'
+    args:
+      - 'run'
+      - '--filename=k8s/petclinic-deployment.yaml'
+      - '--filename=k8s/petclinic-service.yaml'
+      - '--image=${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO_NAME}/petclinic:$COMMIT_SHA'
+      - '--location=${_REGION}'
+      - '--cluster=${_GKE_CLUSTER}'
+    id: 'deploy'
+    waitFor: ['push']
+
+options:
+  logging: CLOUD_LOGGING_ONLY
+
+substitutions:
+  _REGION: us-central1
+  _REPO_NAME: petclinic
+  _GKE_CLUSTER: petclinic-cluster
